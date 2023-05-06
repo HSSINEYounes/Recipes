@@ -1,84 +1,90 @@
+Project Report
+Description :
+The website will allow users to discover cooking recipes, make comments and also rate them.
+Features defining the Site:
+Templates: For storing recipe information, ingredients, comments and notes.
+At the Python code level, the Django framework is used to define a database model for a recipe application.
 
-# Compte Rendu du Projet
+The class recipedefines a recipe template that contains fields such as title, difficulty, URL, image, and ingredients needed. The method __str__()is defined to return the title of the recipe.
 
-## Description :
-### Le site web permettra aux utilisateurs de découvrir des recettes de cuisine, faire des commentaires et les noter également. 
-## Fonctionnalitées définissant le Site :
-### Modèles : Pour stocker les informations sur les recettes, les ingrédients, les commentaires et les notes.
-Au niveau du code Python on utilise le framework Django pour définir un modèle de base de données pour une application de recettes. 
+The class RecipeRatingdefines a note template for a recipe. It uses a foreign key to link a note to a recipe and user, and an integer note field between 1 and 5.
 
-La classe `recipe` définit un modèle de recette qui contient des champs tels que le titre, la difficulté, l'URL, l'image et les ingrédients nécessaires. La méthode `__str__()` est définie pour renvoyer le titre de la recette.
+The class Userinherits from Django's class AbstractUserand adds group and permission relationships for users.
 
-La classe `RecipeRating` définit un modèle de note pour une recette. Elle utilise une clé étrangère pour lier une note à une recette et un utilisateur, ainsi qu'un champ de note entier compris entre 1 et 5.
+The class commentdefines a comment template for a recipe. It uses a foreign key to link a comment to a recipe and a user, as well as a body text field and a creation date.
 
-La classe `User` hérite de la classe `AbstractUser` de Django et ajoute des relations de groupe et de permission pour les utilisateurs.
+Finally, the class favouritesdefines a favorite template for a recipe. It uses a foreign key to link a recipe to a user.
 
-La classe `comment` définit un modèle de commentaire pour une recette. Elle utilise une clé étrangère pour lier un commentaire à une recette et à un utilisateur, ainsi qu'un champ de corps de texte et une date de création.
+Overall, this code defines a database model for storing user recipes, ratings, comments, and favorites information for a recipe app.
 
-Enfin, la classe `favourites` définit un modèle de favori pour une recette. Elle utilise une clé étrangère pour lier une recette à un utilisateur.
+Views: To view the home page, recipe pages, ingredient pages, review pages, and profile pages.
+The code contains several functions:
 
-Dans l'ensemble, ce code définit un modèle de base de données pour stocker les informations relatives aux recettes, aux notes, aux commentaires et aux favoris des utilisateurs pour une application de recettes.
-### Vues : Pour afficher la page d'accueil, les pages des recettes, les pages des ingrédients, les pages des commentaires et les pages de profil.
-Le code contient plusieurs fonctions :
-- La fonction `profile(request)` : affiche le profil de l'utilisateur connecté avec une liste de ses recettes préférées.
-- La fonction `search(request)` : permet de rechercher des recettes à partir d'un mot-clé donné.
-- La fonction `get_recipe_blocks()` : cette fonction utilise la bibliothèque BeautifulSoup pour extraire des données sur les recettes à partir d'un site Web de recettes. Les données extraites sont stockées dans une base de données.
-- La fonction `recipe_list(request)` : cette fonction affiche une liste de toutes les recettes présentes dans la base de données. Elle permet également de naviguer entre les différentes pages de la liste. Si un utilisateur est connecté, la fonction affiche également les recettes qu'il a marquées comme préférées.
-- La fonction `recipe_detail(request, pk)` : cette fonction affiche les détails d'une recette spécifique sélectionnée par l'utilisateur. Elle affiche également la note moyenne attribuée par les utilisateurs à cette recette, ainsi que les commentaires laissés par les utilisateurs.
+The function profile(request): displays the profile of the connected user with a list of his favorite recipes.
+The function search(request): allows you to search for recipes from a given keyword.
+The Function get_recipe_blocks(): This function uses the BeautifulSoup library to pull recipe data from a recipe website. The extracted data is stored in a database.
+The function recipe_list(request): this function displays a list of all the recipes present in the database. It also allows you to navigate between the different pages of the list. If a user is logged in, the function also displays the recipes he has marked as favourites.
+The function recipe_detail(request, pk): this function displays the details of a specific recipe selected by the user. It also displays the average rating given by users to this recipe, as well as comments left by users.
+The code uses several libraries and modules such as requests, beautifulsoup4and Paginatorfrom Django. HTML templates are also included to render app content.
 
-Le code utilise plusieurs bibliothèques et modules tels que `requests`, `beautifulsoup4` et `Paginator` de Django. Les templates html sont également inclus pour rendre le contenu de l'application.
-### Templates : Pour afficher les données dans une mise en page attrayante.
-#### base.html : 
-Il s'agit d'une base de template HTML pour une application web qui permet de rechercher, voir et ajouter des recettes culinaires. Il inclut une barre de navigation avec un formulaire de recherche, des liens pour se connecter ou s'inscrire et un menu déroulant pour accéder au profil utilisateur et se déconnecter. Le code est écrit en utilisant le framework Bootstrap pour le style et la mise en page et utilise également du JavaScript pour rendre le formulaire de recherche interactif. Le code est bien structuré en utilisant des blocs de contenu (blocks) qui permettent d'ajouter du contenu spécifique dans chaque page de l'application.
-#### login.html :
-Ce code représente une page HTML de connexion qui utilise le framework CSS Bulma. Le code utilise également le tag Django `{% load static %}` pour charger des fichiers statiques (tels que les fichiers CSS et JS) depuis le répertoire `static` de l'application. La page affiche un formulaire de connexion qui contient des champs d'entrée pour le nom d'utilisateur et le mot de passe. Le formulaire est envoyé en utilisant la méthode POST, ce qui signifie que les informations de connexion sont envoyées de manière sécurisée au serveur. La page contient également deux liens, l'un pour créer un nouveau compte utilisateur (`Create account`), et l'autre pour accéder à la liste des recettes sans se connecter (`Continue without logging in`).
-#### profile.html :
-Ce code représente un modèle Django qui étend un modèle de base appelé 'base.html' et définit un contenu spécifique pour le bloc 'content'. Le modèle comprend des balises pour afficher le profil de l'utilisateur connecté, ses recettes préférées et la pagination de ces recettes. Il utilise également des balises conditionnelles pour gérer les cas où l'utilisateur n'a pas de recettes préférées. Le code contient également des liens qui permettent à l'utilisateur de supprimer des recettes de ses favoris ou de consulter une recette sans se connecter.
-#### recipe_details.html :
-Le code fourni est une page HTML qui affiche les détails d'une recette de cuisine, y compris les ingrédients, les instructions et les commentaires. Elle permet également aux utilisateurs connectés de noter la recette et affiche des recettes similaires à la fin de la page.
-#### recipe_list.html :
-Ce code est un template HTML utilisant le langage de template Django. Le fichier HTML étend un autre fichier de base `base.html` et utilise une série de balises et de filtres spécifiques à Django pour afficher une liste de recettes. 
+Templates: To display data in an attractive layout.
+database.html:
+This is an HTML template base for a web application that allows you to search, view and add culinary recipes. It includes a navigation bar with a search form, links to login or register and a drop-down menu to access the user profile and logout. The code is written using the Bootstrap framework for styling and layout and also uses JavaScript to make the search form interactive. The code is well structured using content blocks (blocks) which allow to add specific content in each page of the application.
 
-Le code commence par vérifier si l'utilisateur est connecté ou non. Si l'utilisateur est connecté, la variable `lfinal` contenant les recettes de l'utilisateur avec des informations supplémentaires sur la recette est utilisée pour afficher les recettes. Sinon, la variable `recipes` contenant toutes les recettes est utilisée.
+login.html:
+This code represents an HTML login page that uses the Bulma CSS framework. The code also uses the Django tag {% load static %}to load static files (such as CSS and JS files) from the staticapplication directory. The page displays a login form that contains input fields for username and password. The form is submitted using the POST method, which means the login information is sent securely to the server. The page also contains two links, one to create a new user account ( Create account), and the other to access the list of recipes without logging in ( Continue without logging in).
 
-La boucle `for` est utilisée pour parcourir toutes les recettes dans la variable appropriée (`lfinal` ou `recipes`) et afficher les informations de chaque recette, y compris une image, une durée de préparation et une difficulté, ainsi qu'un lien vers la page de détails de la recette.
+profile.html:
+This code represents a Django template that extends a base template called 'base.html' and defines specific content for the 'content' block. The template includes tags to display the profile of the logged in user, their favorite recipes and the pagination of these recipes. It also uses conditional tags to handle cases where the user has no favorite recipes. The code also contains links that allow the user to delete recipes from their favorites or view a recipe without logging in.
 
-Enfin, le code utilise un système de pagination pour afficher les recettes sur plusieurs pages.
-#### register.html :
-C'est une page web écrite en HTML avec l'utilisation de la bibliothèque CSS Bulma. Il s'agit d'une page d'inscription contenant un formulaire avec des champs pour saisir le nom d'utilisateur, l'e-mail et deux champs de mot de passe pour une confirmation. Il y a également un bouton "Envoyer" pour soumettre le formulaire et un lien pour revenir à la page de connexion. Le formulaire utilise un jeton CSRF pour protéger contre les attaques de type CSRF.
-### Authentification et autorisation : Pour les utilisateurs et un système d'autorisation pour les commentaires et les notes.
-### Recherche : Pour les recettes et les ingrédients.
-### Pagination : Pour les listes de recettes et d'ingrédients.
-### Web scraping : Pour récupérer des informations sur les recettes et les ingrédients à partir d'autres sites de cuisine et les importer dans le site.
-### requirements.txt :
-Ce code est une liste de dépendances Python avec leurs versions. Ces dépendances sont nécessaires pour exécuter une application Django. Voici les dépendances incluses dans la liste:
+recipe_details.html:
+The code provided is an HTML page that displays the details of a cooking recipe, including ingredients, instructions, and comments. It also allows logged in users to rate the recipe and displays similar recipes at the end of the page.
 
-- asgiref==3.6.0: un module qui fournit des utilitaires pour les applications Python qui utilisent ASGI (Asynchronous Server Gateway Interface).
-- distlib==0.3.6: une bibliothèque pour la distribution Python.
-- Django==4.1.7: un framework web Python utilisé pour le développement d'applications web.
-- filelock==3.9.0: une bibliothèque Python qui fournit des mécanismes de verrouillage de fichiers.
-- platformdirs==3.1.1: une bibliothèque Python pour la gestion des répertoires de configuration et de données spécifiques à la plate-forme.
-- sqlparse==0.4.3: un analyseur de requêtes SQL pour Python.
-- tzdata==2022.7: une base de données de fuseaux horaires pour Python.
-- virtualenv==20.21.0: un outil pour créer des environnements d'exécution Python isolés.
-### urls.py :
-Ce code définit les URLs pour une application Django, en important les vues correspondantes depuis un fichier `views.py`. Les URLs incluent :
+recipe_list.html:
+This code is an HTML template using the Django template language. The HTML file extends another base file base.htmland uses a series of Django-specific tags and filters to display a list of recipes.
 
-- `recipe_list`: affiche une liste de recettes
-- `recipe_detail`: affiche les détails d'une recette particulière
-- `search`: effectue une recherche de recettes
-- `profile`: affiche le profil de l'utilisateur connecté
-- `rate_recipe`: permet à un utilisateur de noter une recette
-- `register`: affiche un formulaire d'inscription pour les nouveaux utilisateurs
-- `login`: affiche un formulaire de connexion pour les utilisateurs existants
-- `logout`: permet à un utilisateur de se déconnecter
-- `add_comment`: permet à un utilisateur de laisser un commentaire sur une recette
-- `addToFavourites`: permet à un utilisateur d'ajouter une recette à ses favoris
-- `removeFromFavourites`: permet à un utilisateur de supprimer une recette de ses favoris
-- `removeFromFavouritesAcceuil`: permet à un utilisateur de supprimer une recette de ses favoris depuis la page d'accueil. 
+The code starts by checking whether the user is logged in or not. If the user is logged in, the variable lfinalcontaining the user's recipes with additional recipe information is used to display the recipes. Otherwise, the variable recipescontaining all the recipes is used.
 
-En outre, la configuration des médias est fournie pour permettre le stockage des fichiers média tels que les images des recettes.
-## Outils de travail :
-### Django – BeautifulSoup – MySQL
-## Editeur de travail :
-### Visual Studio Code
+The loop foris used to loop through all the recipes in the appropriate variable ( lfinalor recipes) and display each recipe's information, including an image, preparation time and difficulty, and a link to the recipe's detail page .
+
+Finally, the code uses a pagination system to display recipes on multiple pages.
+
+register.html:
+It is a web page written in HTML with the use of CSS Bulma library. This is a registration page containing a form with fields to enter username, email and two password fields for confirmation. There is also a "Submit" button to submit the form and a link to return to the login page. The form uses a CSRF token to protect against CSRF type attacks.
+
+Authentication and authorization: For users and an authorization system for comments and ratings.
+Search: For recipes and ingredients.
+Pagination: For recipe and ingredient lists.
+Web scraping: To grab recipe and ingredient information from other cooking sites and import it into the site.
+requirements.txt:
+This code is a list of Python dependencies with their versions. These dependencies are required to run a Django application. Here are the dependencies included in the list:
+
+asgiref==3.6.0: a module that provides utilities for Python applications that use ASGI (Asynchronous Server Gateway Interface).
+distlib==0.3.6: a library for the Python distribution.
+Django==4.1.7: A Python web framework used for web application development.
+filelock==3.9.0: a Python library that provides file locking mechanisms.
+platformdirs==3.1.1: A Python library for managing platform-specific configuration and data directories.
+sqlparse==0.4.3: an SQL query parser for Python.
+tzdata==2022.7: A time zone database for Python.
+virtualenv==20.21.0: a tool for creating isolated Python runtime environments.
+urls.py:
+This code defines the URLs for a Django application, importing the corresponding views from a views.py. URLs include:
+
+recipe_list: displays a list of recipes
+recipe_detail: displays the details of a particular recipe
+search: perform a search for recipes
+profile: displays the profile of the connected user
+rate_recipe: allows a user to rate a recipe
+register: displays a registration form for new users
+login: displays a login form for existing users
+logout: allows a user to log out
+add_comment: allows a user to leave a comment on a recipe
+addToFavourites: allows a user to add a recipe to their favorites
+removeFromFavourites: allows a user to delete a recipe from his favorites
+removeFromFavouritesAcceuil: allows a user to delete a recipe from his favorites from the homepage.
+Additionally, media configuration is provided to allow storage of media files such as recipe images.
+
+Work tools:
+Django – BeautifulSoup – MySQL
+editor:
+Visual Studio Code
