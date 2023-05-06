@@ -82,3 +82,25 @@ En outre, la configuration des médias est fournie pour permettre le stockage de
 ### Django – BeautifulSoup – MySQL
 ## Editeur de travail :
 ### Visual Studio Code
+## Installation :
+1. Clonez le dépôt sur votre machine locale.
+2. Accédez au répertoire du projet et créez un environnement virtuel :
+  ```python -m venv venv```
+3. Activez l'environnement virtuel :
+  ```source venv/bin/activate```
+4. Installez les dépendances requises :
+  ```pip install -r requirements.txt```
+5. Créez les tables de la base de données :
+  ```python manage.py migrate```
+6. Démarrez le serveur de développement :
+  ```python manage.py runserver```
+7. Accédez à http://localhost:8000/Recette/index dans votre navigateur web pour utiliser l'application.
+
+## Crédits :
+Cette application web a été créée par :
+
+- **HSSINE Younes**
+- **KHARDALI Ikram**
+- **EL MANSOURI Mohamed Achraf**
+
+Les données de recette ont été récupérées en utilisant Beautiful Soup à partir du site web https://www.jamieoliver.com
